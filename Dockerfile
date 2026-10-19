@@ -1,18 +1,14 @@
-# Utilise une image Python officielle
-FROM python:3.11-slim
+# Image Python ultra-légère
+FROM python:3.11-alpine
 
-# Définir le répertoire de travail
+# Répertoire de travail
 WORKDIR /app
 
-# Copier les fichiers du projet
-COPY requirements.txt .
-COPY main.py .
+# Copier les fichiers
+COPY . .
 
 # Installer les dépendances
-RUN pip install --no-cache-dir -r requirements.txt
+RUN pip install fastapi uvicorn
 
-# Exposer le port 8000 (port par défaut de FastAPI)
-EXPOSE 8000
-
-# Commande pour lancer l'application
+# Lancer l'app
 CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]
